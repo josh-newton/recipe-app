@@ -1,1 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300');
 
+$fa-font-path: '../bower_components/font-awesome/fonts/';
+@import "../bower_components/font-awesome/scss/font-awesome";
+
+$orange:       #f39c12;
+$darkOrange:   #e67e22;
+$grey:         #7f8c8d;
+$lightGrey:    #e4e4e4;
+$darkGrey:      #808080;
+
+
+
+
+
+
+
+
+
+
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.container{
+  width: 640px;
+  height: 480px;
+}
+
+
+
+
+//----------------------------------------
+// Directives
+//----------------------------------------
+@import "../scripts/directives/recipe-search/recipe-search";
