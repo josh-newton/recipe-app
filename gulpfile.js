@@ -9,16 +9,19 @@ var ngAnnotate = require('gulp-ng-annotate');
 var autoprefixer = require('gulp-autoprefixer');
 var karma = require('karma').server;
 var merge = require('merge-stream');
+var plumber = require('gulp-plumber');
+var gutil = require('gulp-util');
 
 gulp.task('compass', function() {
   return gulp.src('app/styles/**/*.scss')
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
     .pipe(compass({
       css: '.tmp/styles',
       sass: 'app/styles'
     }))
-    .on('error', function(error) {
-      console.log(error);
-    })
     .pipe(gulp.dest('.tmp/styles'))
     .pipe(reload({stream: true}));
 });
@@ -44,7 +47,7 @@ gulp.task('html', ['compass'], function () {
   return gulp.src('app/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', ngAnnotate()))
-    .pipe($.if('*.js', $.uglify()))
+    // .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.csso()))
     .pipe(assets.restore())
     .pipe($.useref())
@@ -53,17 +56,13 @@ gulp.task('html', ['compass'], function () {
 });
 
 gulp.task('images', function () {
-  var images = gulp.src('icon.png')
-  .pipe(gulp.dest('dist/'));
+  var images = gulp.src('app/images/*')
+  .pipe(gulp.dest('dist/images/'));
   return merge(images);
 });
 
 gulp.task('fonts', function () {
-  return gulp.src(require('main-bower-files')({
-    filter: '**/*.{eot,svg,ttf,woff,woff2}'
-  }).concat('app/fonts/**/*'))
-    .pipe(gulp.dest('.tmp/fonts'))
-    .pipe(gulp.dest('dist/fonts'));
+  return gulp.src('app/bower_components/**/*.{eot,svg,ttf,woff,woff2}').pipe(gulp.dest('dist/bower_components'));
 });
 
 gulp.task('extras', function () {
@@ -71,7 +70,13 @@ gulp.task('extras', function () {
   return merge(manifest);
 });
 
-gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
+gulp.task('data', function () {
+  var data = gulp.src('app/data/*.json').pipe(gulp.dest('dist/data'));
+});
+
+gulp.task('clean', function() {
+  require('del').bind(null, ['.tmp', 'dist/*', 'dist']);
+});
 
 gulp.task('serve', ['compass', 'fonts'], function () {
   browserSync({
@@ -113,8 +118,8 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'extras'], function () {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
+gulp.task('build', ['clean', 'html', 'images', 'fonts', 'data', 'extras'], function () {
+  return gulp.src('dist/**/*').pipe($.size({title: 'build'}));
 });
 
 gulp.task('default', ['clean'], function () {
