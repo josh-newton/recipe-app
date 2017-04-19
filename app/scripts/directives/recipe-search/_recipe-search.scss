@@ -1,0 +1,88 @@
+.recipe-search{
+  position: relative;
+  width: 100%;
+
+  .search-area{
+    position: relative;
+    z-index: 100;
+    box-shadow: 0px 1px 1px 1px $lightGrey;
+    input{
+      font-family: 'Montserrat', sans-serif;
+      color: $orange;
+      padding-left: 20px;
+      font-size: 24px;
+      border: none;
+      width: calc(100% - 85px);
+      height: 50px;
+      display: block;
+      border-radius: 2px 2px 0 0;
+      outline: none;
+    }
+    .fa{
+      font-size: 21px;
+      color: $orange;
+      position: absolute;
+      &.fa-search{
+        top: 14px;
+        right: 65px;
+      }
+      &.fa-filter{
+        top: 14px;
+        right: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+  .suggestions{
+    position: relative;
+    z-index: 10;
+    background: #fbfbfb;
+    ul{
+      margin: 0 0 0 0;
+      padding: 0;
+      box-shadow: 0px 1px 1px 1px $lightGrey;
+
+      li{
+        color: $darkGrey;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0 20px 0 20px;
+        line-height: 50px;
+        list-style: none;
+        border-bottom: 1px solid $lightGrey;
+        .suggestion-text{
+          display: inline-block;
+          width: 97%;
+        }
+        .fa{
+          width: 3%;
+          display: inline-block;
+          position: relative;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+  .search-ingredients{
+    ul{
+      padding: 0;
+      margin-bottom: 5px;
+    }
+    li{
+      padding: 0 10px;
+      color: $darkGrey;
+      font-size: 18px;
+      display: inline-block;
+      list-style: none;
+      .suggestion-text{
+        display: inline-block;
+      }
+      .fa{
+        margin-left: 10px;
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<div class="col recipe-search">
+  <div class="search-area">
+    <input type="text" ng-model="searchVal" class="col" ng-change="searchChange()">
+    <span class="fa fa-search"></span>
+    <span class="fa fa-filter" ng-click="filtersVisible = !filtersVisible"></span>
+  </div>
+  <div class="suggestions">
+    <ul>
+      <li ng-repeat="ingredient in filteredIngredients | limitTo: 5" ng-click="addToSearchIngredients(ingredient);"><span class="suggestion-text" ng-bind="ingredient"></span><span class="fa fa-arrow-right"></span></li>
+    </ul>
+  </div>
+  <div class="search-ingredients" ng-hide="searchIngredients.length == 0">
+    <ul>
+      <li ng-repeat="ingredient in searchIngredients"><span class="ingredient-text" ng-bind="ingredient"></span><span class="fa fa-close" ng-click="removeFromSearchIngredients($index)"></span></li>
+    </ul>
+  </div>
+</div>

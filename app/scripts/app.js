@@ -6,7 +6,7 @@ angular.module('recipeApp', [
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/'});
   $routeProvider.when('/', {
-    templateUrl: '../views/main.html',
+    templateUrl: 'views/main.html',
     controller: 'MainCtrl'
   });
 }]);
